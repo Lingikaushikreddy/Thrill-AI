@@ -65,7 +65,7 @@ export function VoiceReceptionist() {
                 recognitionRef.current.onerror = (event: any) => {
                     console.error("Recognition Error:", event.error);
                     if (event.error === 'not-allowed') {
-                        setErrorMessage('Microphone access denied.');
+                        setErrorMessage('Microphone blocked! Click the Lock icon 🔒 in your URL bar -> Site Settings -> Allow Microphone.');
                         setStatus('error');
                     } else if (event.error === 'no-speech') {
                         // Just reset if no speech

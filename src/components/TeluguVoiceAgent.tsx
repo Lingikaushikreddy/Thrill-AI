@@ -59,7 +59,7 @@ export function TeluguVoiceAgent() {
                 recognitionRef.current.onerror = (event: any) => {
                     console.error("Recognition Error:", event.error);
                     if (event.error === 'not-allowed') {
-                        setErrorMessage(' మైక్రోఫోన్ అనుమతి నిరాకరించబడింది.');
+                        setErrorMessage('Microphone Blocked! Please click the Lock 🔒 icon in the address bar and Allow Microphone access.');
                         setStatus('error');
                     } else if (event.error === 'no-speech') {
                         setStatus('idle');
