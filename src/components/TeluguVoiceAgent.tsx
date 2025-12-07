@@ -79,6 +79,8 @@ export function TeluguVoiceAgent() {
         }
     }, []);
 
+    const [missingVoice, setMissingVoice] = useState(false);
+
     const speak = (text: string) => {
         if (!synthesisRef.current) return;
         synthesisRef.current.cancel();
@@ -92,9 +94,11 @@ export function TeluguVoiceAgent() {
 
         if (voice) {
             utterance.voice = voice;
+            setMissingVoice(false);
         } else {
-            // Fallback warning if needed, or just let it try (might sound funny in English voice)
-            console.warn("Telugu voice not found, using default");
+            console.warn("Telugu voice not found");
+            setMissingVoice(true);
+            // Fallback: Use English voice but warn user
         }
 
         utterance.rate = 0.9; // Slightly slower for clarity
@@ -181,6 +185,16 @@ export function TeluguVoiceAgent() {
                     <div className="absolute top-4 inset-x-4 bg-red-100 border border-red-200 text-red-700 p-3 rounded-lg flex items-start gap-2 text-sm z-50">
                         <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
                         <p>{errorMessage}</p>
+                    </div>
+                )}
+
+                {missingVoice && (
+                    <div className="absolute top-4 inset-x-4 bg-yellow-100 border border-yellow-200 text-yellow-800 p-3 rounded-lg flex items-start gap-2 text-sm z-50 animate-in fade-in slide-in-from-top-2">
+                        <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
+                        <p>
+                            <strong>No Telugu Voice Found!</strong><br />
+                            Using fallback voice. Please install a Telugu language pack on your device settings for the real experience.
+                        </p>
                     </div>
                 )}
 
