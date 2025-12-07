@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { FadeIn } from './FadeIn';
 import { useState } from 'react';
 import { GetStartedModal } from './GetStartedModal';
+import Link from 'next/link';
 
 export function Hero() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -69,6 +70,16 @@ export function Hero() {
                         >
                             Start Free Trial <ArrowRight className="w-5 h-5" />
                         </motion.button>
+
+                        <Link href="/demos/hospital">
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="px-8 py-4 bg-white text-[#2D2520] border border-[#F5E6D3] rounded-full font-bold text-lg hover:border-[#FF6B6B] hover:text-[#FF6B6B] transition-colors shadow-sm"
+                            >
+                                <span className="flex items-center gap-2"><Play className="w-4 h-4 fill-current" /> Try Voice Agent</span>
+                            </motion.button>
+                        </Link>
 
                     </div>
                 </FadeIn>
