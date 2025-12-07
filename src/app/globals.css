@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+:root {
+  /* Creating a warm, organic base */
+  --background: #FFFDF7; /* Warm off-white, like paper or clouds */
+  --foreground: #2D2520; /* Warm dark grey/brown */
+  
+  /* The Sunrise Gradient Colors */
+  --sunrise-start: #FF9A9E;
+  --sunrise-mid: #FECFEF;
+  --sunrise-end: #F6F3FF; /* Fading to sky */
+  
+  /* Accent Colors (Constraint: No cool blues/indigos) */
+  --primary: #FF6B6B; /* Soft coral red */
+  --secondary: #FFCC5C; /* Sun yellow */
+  
+  /* Border Radius Vibe (Constraint: Not 8px) */
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 32px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #1A1512; /* Warm dark background */
+    --foreground: #F5EFE6;
+    
+    /* Dark mode sunrise (Deep orange to purple-grey? No, avoid purple. Deep orange to dark grey) */
+    --sunrise-start: #D94A4A;
+    --sunrise-mid: #B85C38;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Global Vibe Utilities */
+.vibe-gradient-text {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FFCC5C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.vibe-gradient-bg {
+  background: linear-gradient(135deg, #FFF5EB 0%, #FFFDF7 100%);
+}
+
+.card-hover {
+  transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.2s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -10px rgba(255, 107, 107, 0.15);
+}
