@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowRight, Sparkles, MessageCircle, Play } from 'lucide-react';
+import { ArrowRight, Sparkles, MessageCircle, Play, Languages } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { FadeIn } from './FadeIn';
 import { useState } from 'react';
@@ -71,23 +71,13 @@ export function Hero() {
                             Start Free Trial <ArrowRight className="w-5 h-5" />
                         </motion.button>
 
-                        <Link href="/demos/hospital">
+                        <Link href="/demos/languages">
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="px-6 py-4 bg-white text-[#2D2520] border border-[#F5E6D3] rounded-full font-bold text-lg hover:border-[#FF6B6B] transition-colors shadow-sm"
+                                className="px-6 py-4 bg-white text-[#2D2520] border border-[#F5E6D3] rounded-full font-bold text-lg hover:border-blue-500 hover:text-blue-600 transition-colors shadow-sm"
                             >
-                                <span className="flex items-center gap-2"><Play className="w-4 h-4 fill-current" /> English Demo</span>
-                            </motion.button>
-                        </Link>
-
-                        <Link href="/demos/telugu">
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                className="px-6 py-4 bg-[#FFF5EB] text-orange-600 border border-orange-100 rounded-full font-bold text-lg hover:bg-orange-100 transition-colors shadow-sm"
-                            >
-                                <span className="flex items-center gap-2">🕉️ Telugu Demo</span>
+                                <span className="flex items-center gap-2"><Languages className="w-5 h-5 text-blue-500" /> Try Multilingual Demo</span>
                             </motion.button>
                         </Link>
 
