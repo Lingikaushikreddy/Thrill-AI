@@ -15,14 +15,30 @@ export function VoiceReceptionist() {
     const recognitionRef = useRef<any>(null);
     const synthesisRef = useRef<SpeechSynthesis | null>(null);
 
+    const [voicesLoaded, setVoicesLoaded] = useState(false);
+
     useEffect(() => {
         if (typeof window !== 'undefined') {
             synthesisRef.current = window.speechSynthesis;
 
+            const loadVoices = () => {
+                const voices = synthesisRef.current?.getVoices() || [];
+                if (voices.length > 0) {
+                    setVoicesLoaded(true);
+                    console.log("Voices loaded:", voices.length);
+                }
+            };
+
+            // Chrome loads voices asynchronously
+            if (synthesisRef.current?.onvoiceschanged !== undefined) {
+                synthesisRef.current.onvoiceschanged = loadVoices;
+            }
+            loadVoices(); // Try immediately too
+
             // Browser Compatibility Check
             if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
                 setStatus('error');
-                setErrorMessage('Your browser does not support Voice Recognition. Please use Google Chrome or Microsoft Edge on Desktop.');
+                setErrorMessage('Voice not supported in this browser. Please use Chrome.');
                 return;
             }
 
@@ -35,7 +51,6 @@ export function VoiceReceptionist() {
                 recognitionRef.current.lang = 'en-US';
 
                 recognitionRef.current.onstart = () => {
-                    console.log("Recognition started");
                     setStatus('listening');
                     setErrorMessage('');
                 };
@@ -50,7 +65,7 @@ export function VoiceReceptionist() {
                 recognitionRef.current.onerror = (event: any) => {
                     console.error("Recognition Error:", event.error);
                     if (event.error === 'not-allowed') {
-                        setErrorMessage('Microphone access denied. Please allow microphone permissions.');
+                        setErrorMessage('Microphone access denied.');
                         setStatus('error');
                     } else if (event.error === 'no-speech') {
                         // Just reset if no speech
@@ -62,11 +77,9 @@ export function VoiceReceptionist() {
                 };
 
                 recognitionRef.current.onend = () => {
-                    console.log("Recognition ended");
                     if (status === 'listening') setStatus('processing');
                 };
             } catch (err) {
-                console.error("Setup Error", err);
                 setErrorMessage("Failed to initialize voice engine.");
                 setStatus('error');
             }
@@ -75,22 +88,43 @@ export function VoiceReceptionist() {
 
     const speak = (text: string) => {
         if (!synthesisRef.current) return;
-        synthesisRef.current.cancel();
+        synthesisRef.current.cancel(); // Stop previous
 
         const utterance = new SpeechSynthesisUtterance(text);
         const voices = synthesisRef.current.getVoices();
-        // Prefer a smooth voice
-        const voice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Samantha') || v.name.includes('Female'));
+
+        // Robust voice selection
+        const voice = voices.find(v => v.name.includes('Google US English')) ||
+            voices.find(v => v.name.includes('Samantha')) ||
+            voices.find(v => v.lang.includes('en-US')) ||
+            voices[0];
+
         if (voice) utterance.voice = voice;
         utterance.rate = 1.0;
         utterance.pitch = 1.0;
 
         utterance.onstart = () => setStatus('speaking');
         utterance.onend = () => setStatus('idle');
-        utterance.onerror = (e) => console.error("Speech Synthesis Error", e);
+        utterance.onerror = (e) => {
+            console.error("Speech Synthesis Error", e);
+            // If audio is blocked, we might still want to reset status
+            setStatus('idle');
+        };
 
         synthesisRef.current.speak(utterance);
         setResponse(text);
+    };
+
+    // Helper to "unlock" audio on mobile/safari
+    const unlockAudio = () => {
+        if (synthesisRef.current && synthesisRef.current.paused) {
+            synthesisRef.current.resume();
+        }
+        // Play a silent buffer if needed (advanced), but usually just calling speak() in a click handler works
+        // We can force a tiny speak here to prime it
+        const dummy = new SpeechSynthesisUtterance('');
+        dummy.volume = 0;
+        synthesisRef.current?.speak(dummy);
     };
 
     const handleUserMessage = (text: string) => {
@@ -120,6 +154,9 @@ export function VoiceReceptionist() {
             alert(errorMessage);
             return;
         }
+
+        // Essential for mobile/safari to unlock audio context
+        unlockAudio();
 
         if (recognitionRef.current) {
             // Must serve over HTTPS or localhost
