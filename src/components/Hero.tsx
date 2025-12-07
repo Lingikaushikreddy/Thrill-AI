@@ -75,9 +75,19 @@ export function Hero() {
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="px-8 py-4 bg-white text-[#2D2520] border border-[#F5E6D3] rounded-full font-bold text-lg hover:border-[#FF6B6B] hover:text-[#FF6B6B] transition-colors shadow-sm"
+                                className="px-6 py-4 bg-white text-[#2D2520] border border-[#F5E6D3] rounded-full font-bold text-lg hover:border-[#FF6B6B] transition-colors shadow-sm"
                             >
-                                <span className="flex items-center gap-2"><Play className="w-4 h-4 fill-current" /> Try Voice Agent</span>
+                                <span className="flex items-center gap-2"><Play className="w-4 h-4 fill-current" /> English Demo</span>
+                            </motion.button>
+                        </Link>
+
+                        <Link href="/demos/telugu">
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="px-6 py-4 bg-[#FFF5EB] text-orange-600 border border-orange-100 rounded-full font-bold text-lg hover:bg-orange-100 transition-colors shadow-sm"
+                            >
+                                <span className="flex items-center gap-2">🕉️ Telugu Demo</span>
                             </motion.button>
                         </Link>
 
