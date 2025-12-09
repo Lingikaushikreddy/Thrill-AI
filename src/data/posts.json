@@ -1,0 +1,29 @@
+[
+    {
+        "id": "1",
+        "category": "Enterprise",
+        "title": "How SMEs Scale with AI on WhatsApp",
+        "desc": "Discover how businesses are leveraging AI-powered WhatsApp automation to grow faster.",
+        "color": "bg-blue-50 text-blue-600 border-blue-200",
+        "image": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2664&auto=format&fit=crop",
+        "url": "https://orai-robotics.com/blog/how-smes-can-scale-with-ai-powered-whatsapp-chatbots"
+    },
+    {
+        "id": "2",
+        "category": "Technology",
+        "title": "The Future of Voice AI in India",
+        "desc": "Explore how voice AI is transforming customer engagement across Indian businesses.",
+        "color": "bg-purple-50 text-purple-600 border-purple-200",
+        "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2532&auto=format&fit=crop",
+        "url": "https://inc42.com/features/the-future-of-voice-ai-in-india-trends-to-watch/"
+    },
+    {
+        "id": "3",
+        "category": "Payments",
+        "title": "UPI + AI: The New Growth Hack",
+        "desc": "Learn how combining UPI payments with AI creates seamless customer experiences.",
+        "color": "bg-emerald-50 text-emerald-600 border-emerald-200",
+        "image": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=2670&auto=format&fit=crop",
+        "url": "https://bfsi.economictimes.indiatimes.com/news/fintech/how-ai-is-transforming-upi-payments-in-india/106687425"
+    }
+]

@@ -1,0 +1,60 @@
+[
+    {
+        "id": "starter",
+        "name": "Starter",
+        "price": {
+            "monthly": "₹999",
+            "yearly": "₹9,999"
+        },
+        "description": "Launch quickly with essential automation for a single workspace.",
+        "features": [
+            "Smart Chatbot on WhatsApp + Instagram",
+            "100 customer conversations/month",
+            "100 AI calling reminders/month",
+            "25 business documents/month",
+            "Automated payments and tracking",
+            "Standard support"
+        ],
+        "highlight": false
+    },
+    {
+        "id": "growth",
+        "name": "Growth",
+        "price": {
+            "monthly": "₹2,999",
+            "yearly": "₹29,999"
+        },
+        "description": "Scale your automations with deeper analytics and voice AI coverage.",
+        "features": [
+            "Everything in Starter",
+            "1,000 customer conversations/month",
+            "200 AI calling reminders/month",
+            "600 AI Telecaller calls (In/Out)",
+            "100 business documents/month",
+            "Priority support",
+            "Advanced analytics suite"
+        ],
+        "highlight": true,
+        "tag": "Most Popular"
+    },
+    {
+        "id": "enterprise",
+        "name": "Enterprise",
+        "price": {
+            "monthly": "₹6,999",
+            "yearly": "₹69,999"
+        },
+        "description": "Designed for multi-brand, multi-region teams with advanced governance.",
+        "features": [
+            "Everything in Growth",
+            "10,000 customer conversations/month",
+            "2,000 AI Telecaller calls/month",
+            "Unlimited AI Calling Campaigns",
+            "200 business documents/month",
+            "Custom automation workflows",
+            "Dedicated account manager"
+        ],
+        "highlight": false,
+        "tag": "Best Value"
+    }
+]
