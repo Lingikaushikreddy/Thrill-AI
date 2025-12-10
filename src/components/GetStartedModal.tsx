@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Loader2, CheckCircle } from 'lucide-react';
+import { X, Loader2, CheckCircle2 } from 'lucide-react';
+import { AnimatedLogo } from './AnimatedLogo'; // Assuming we can reuse this or simple icon
 
 export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen: boolean; onClose: () => void; plan?: string }) {
     const [loading, setLoading] = useState(false);
@@ -51,73 +52,76 @@ export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen:
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+                        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                     />
 
                     <motion.div
                         initial={{ scale: 0.95, opacity: 0, y: 20 }}
                         animate={{ scale: 1, opacity: 1, y: 0 }}
                         exit={{ scale: 0.95, opacity: 0, y: 20 }}
-                        className="relative bg-[#FFFDF7] w-full max-w-md rounded-[32px] shadow-2xl overflow-hidden border border-[#F5E6D3]"
+                        className="relative bg-[#0F110E] w-full max-w-md rounded-[32px] shadow-2xl overflow-hidden border border-white/10 ring-1 ring-white/5"
                     >
-                        <div className="p-8">
-                            <div className="flex items-center justify-between mb-6">
-                                <h3 className="text-2xl font-bold text-[#2D2520]">
-                                    {success ? 'You are all set!' : 'Start your journey'}
+                        {/* Background Grid Effect */}
+                        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none opacity-20"></div>
+
+                        <div className="p-8 relative z-10">
+                            <div className="flex items-center justify-between mb-8">
+                                <h3 className="text-2xl font-serif font-medium text-white tracking-tight">
+                                    {success ? 'All set!' : 'Start your journey'}
                                 </h3>
-                                <button onClick={onClose} className="p-2 hover:bg-black/5 rounded-full transition-colors">
-                                    <X className="w-5 h-5 text-[#5C5C5C]" />
+                                <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition-colors text-white/50 hover:text-white">
+                                    <X className="w-5 h-5" />
                                 </button>
                             </div>
 
                             {success ? (
-                                <div className="flex flex-col items-center justify-center py-8 text-center">
-                                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                                        <CheckCircle className="w-8 h-8 text-green-600" />
+                                <div className="flex flex-col items-center justify-center py-12 text-center">
+                                    <div className="w-16 h-16 bg-brand-sky/10 rounded-full flex items-center justify-center mb-6 border border-brand-sky/20">
+                                        <CheckCircle2 className="w-8 h-8 text-brand-sky" />
                                     </div>
-                                    <p className="text-[#5C5C5C]">Thanks for signing up! We'll be in touch shortly.</p>
+                                    <p className="text-white/70 font-light text-lg">Thanks for signing up! We'll be in touch shortly.</p>
                                 </div>
                             ) : (
-                                <form onSubmit={handleSubmit} className="space-y-4">
+                                <form onSubmit={handleSubmit} className="space-y-5">
                                     <div>
-                                        <label className="block text-sm font-bold text-[#2D2520] mb-1.5">Full Name</label>
+                                        <label className="block text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Full Name</label>
                                         <input
                                             required
                                             type="text"
                                             placeholder="Jane Doe"
                                             value={formData.name}
                                             onChange={e => setFormData({ ...formData, name: e.target.value })}
-                                            className="w-full px-4 py-3 rounded-xl border border-[#F5E6D3] bg-white focus:outline-none focus:border-[#FF6B6B] focus:ring-2 focus:ring-[#FF6B6B]/20 transition-all"
+                                            className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white placeholder:text-white/20 focus:outline-none focus:border-brand-sky/50 focus:ring-1 focus:ring-brand-sky/50 transition-all font-light"
                                         />
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-bold text-[#2D2520] mb-1.5">Work Email</label>
+                                        <label className="block text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Work Email</label>
                                         <input
                                             required
                                             type="email"
                                             placeholder="jane@company.com"
                                             value={formData.email}
                                             onChange={e => setFormData({ ...formData, email: e.target.value })}
-                                            className="w-full px-4 py-3 rounded-xl border border-[#F5E6D3] bg-white focus:outline-none focus:border-[#FF6B6B] focus:ring-2 focus:ring-[#FF6B6B]/20 transition-all"
+                                            className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white placeholder:text-white/20 focus:outline-none focus:border-brand-sky/50 focus:ring-1 focus:ring-brand-sky/50 transition-all font-light"
                                         />
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-bold text-[#2D2520] mb-1.5">Company Name</label>
+                                        <label className="block text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Company Name</label>
                                         <input
                                             type="text"
                                             placeholder="Acme Inc."
                                             value={formData.company}
                                             onChange={e => setFormData({ ...formData, company: e.target.value })}
-                                            className="w-full px-4 py-3 rounded-xl border border-[#F5E6D3] bg-white focus:outline-none focus:border-[#FF6B6B] focus:ring-2 focus:ring-[#FF6B6B]/20 transition-all"
+                                            className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white placeholder:text-white/20 focus:outline-none focus:border-brand-sky/50 focus:ring-1 focus:ring-brand-sky/50 transition-all font-light"
                                         />
                                     </div>
 
                                     <button
                                         disabled={loading}
                                         type="submit"
-                                        className="w-full py-4 bg-[#2D2520] text-white rounded-xl font-bold hover:bg-[#FF6B6B] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4"
+                                        className="w-full py-4 bg-white text-black rounded-xl font-bold hover:bg-brand-sky transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-6"
                                     >
                                         {loading ? (
                                             <>
@@ -129,18 +133,20 @@ export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen:
                                         )}
                                     </button>
 
-                                    <p className="text-xs text-center text-[#5C5C5C] mt-4">
+                                    <p className="text-[10px] text-center text-white/30 mt-4 leading-relaxed">
                                         By signing up, you agree to our Terms and Privacy Policy.
+                                        <br />Your data is processed securely.
                                     </p>
                                 </form>
                             )}
                         </div>
 
-                        {/* Sunrise Gradient Bottom Bar */}
-                        <div className="h-2 w-full bg-gradient-to-r from-[#FF6B6B] to-[#FFCC5C]" />
+                        {/* Bottom Gradient Line */}
+                        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-brand-sky to-transparent opacity-50" />
                     </motion.div>
                 </div>
             )}
         </AnimatePresence>
     );
 }
+

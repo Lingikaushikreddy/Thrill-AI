@@ -29,6 +29,17 @@
   --animate-border-spin: border-spin 2.5s linear infinite;
   --animate-shimmer: shimmer 4s linear infinite;
   --animate-breathe: breathe 4.5s linear infinite;
+  --animate-to-and-fro: to-and-fro 40s ease-in-out infinite alternate;
+
+  @keyframes to-and-fro {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-50%);
+    }
+  }
 
   /* Entry Animations */
   --animate-enter: enter 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;

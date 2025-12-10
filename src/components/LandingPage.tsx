@@ -4,11 +4,14 @@ import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight, CheckCircle2, History, Layers, Zap, CreditCard, Gem, Globe, ShieldCheck } from 'lucide-react';
 import { AnimatedLogo } from './AnimatedLogo';
+import { GetStartedModal } from './GetStartedModal';
 import pricingData from '@/data/pricing.json';
 
 export function LandingPage() {
     const cardsRef = useRef<HTMLDivElement>(null);
     const [billing, setBilling] = React.useState<'monthly' | 'yearly'>('monthly');
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const [selectedPlan, setSelectedPlan] = React.useState('starter');
 
     useEffect(() => {
         // Spotlight effect logic
@@ -46,7 +49,13 @@ export function LandingPage() {
                     <Link href="#pricing" className="text-xs font-medium text-white/50 hover:text-white transition-colors">Pricing</Link>
                 </div>
 
-                <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black text-xs font-semibold hover:bg-brand-sky transition-colors group">
+                <button
+                    onClick={() => {
+                        setSelectedPlan('starter');
+                        setIsModalOpen(true);
+                    }}
+                    className="flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black text-xs font-semibold hover:bg-brand-sky transition-colors group"
+                >
                     Start Free Trial
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </button>
@@ -77,10 +86,10 @@ export function LandingPage() {
                             <span>Initialize Agent</span>
                         </button>
 
-                        <button className="hover:bg-white/10 hover:text-white transition-all flex text-sm font-medium text-slate-300 bg-white/5 rounded-full pt-3 pr-6 pb-3 pl-6 gap-x-2 gap-y-2 items-center group relative border border-white/5 overflow-hidden">
+                        <Link href="/demos/languages" className="hover:bg-white/10 hover:text-white transition-all flex text-sm font-medium text-slate-300 bg-white/5 rounded-full pt-3 pr-6 pb-3 pl-6 gap-x-2 gap-y-2 items-center group relative border border-white/5 overflow-hidden">
                             <span className="text-sm font-medium tracking-tight">View Demo</span>
                             <ArrowRight className="w-4 h-4 opacity-70 group-hover:translate-x-0.5 transition-transform" />
-                        </button>
+                        </Link>
                     </div>
                 </div>
 
@@ -123,7 +132,7 @@ export function LandingPage() {
                 <div className="w-[95%] z-20 pb-8 absolute bottom-0 lg:bottom-10">
                     <div className="flex flex-col lg:flex-row overflow-hidden opacity-50 w-full pt-6 gap-x-6 gap-y-6 items-center justify-between">
                         <div className="flex-1 overflow-hidden w-full relative" style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
-                            <div className="flex animate-[marquee_40s_linear_infinite] w-max gap-x-32 gap-y-16 items-center">
+                            <div className="flex animate-to-and-fro w-max gap-x-32 gap-y-16 items-center">
                                 {/* Replace specific logos with generic tech/finance logos or text for now to save SVG space */}
                                 <p className="text-xl font-serif italic opacity-50">Vercel</p>
                                 <p className="text-xl font-serif italic opacity-50">OpenAI</p>
@@ -377,7 +386,17 @@ export function LandingPage() {
                                         ))}
                                     </ul>
 
-                                    <button className={`w-full py-3 rounded-full text-sm font-medium transition-all ${plan.highlight ? 'bg-brand-sky text-black hover:bg-sky-300 shadow-[0_0_20px_rgba(56,189,248,0.2)]' : 'bg-white/10 text-white hover:bg-white/20'}`}>
+                                    <button
+                                        onClick={() => {
+                                            if (billing === 'monthly') {
+                                                setSelectedPlan(plan.id);
+                                                setIsModalOpen(true);
+                                            } else {
+                                                window.location.href = 'mailto:sales@thrillai.com';
+                                            }
+                                        }}
+                                        className={`w-full py-3 rounded-full text-sm font-medium transition-all ${plan.highlight ? 'bg-brand-sky text-black hover:bg-sky-300 shadow-[0_0_20px_rgba(56,189,248,0.2)]' : 'bg-white/10 text-white hover:bg-white/20'}`}
+                                    >
                                         {billing === 'monthly' ? 'Start Free Trial' : 'Contact Sales'}
                                     </button>
                                 </div>
@@ -403,6 +422,12 @@ export function LandingPage() {
                     </div>
                 </div>
             </footer>
+
+            <GetStartedModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                plan={selectedPlan}
+            />
         </div>
     );
 }
