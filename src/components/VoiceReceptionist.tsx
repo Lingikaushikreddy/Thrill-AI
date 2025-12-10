@@ -116,22 +116,40 @@ export function VoiceReceptionist() {
         synthesisRef.current?.speak(dummy);
     };
 
-    const handleUserMessage = (text: string) => {
+    const [history, setHistory] = useState<{ role: 'user' | 'model'; parts: string }[]>([]);
+
+    const handleUserMessage = async (text: string) => {
         setStatus('processing');
-        const lowerText = text.toLowerCase();
-        setTimeout(() => {
-            if (lowerText.includes('appointment') || lowerText.includes('book') || lowerText.includes('schedule')) {
-                speak("I can help with that. Are you a new patient or returning?");
-            } else if (lowerText.includes('cardiology') || lowerText.includes('heart')) {
-                speak("Dr. Reynolds in Cardiology is available tomorrow at 9 AM. Shall I book it?");
-            } else if (lowerText.includes('emergency') || lowerText.includes('pain') || lowerText.includes('blood')) {
-                speak("Alert. Please hang up and dial 911 immediately. This sounds like a medical emergency.");
-            } else if (lowerText.includes('hello') || lowerText.includes('hi')) {
-                speak("Hello. I am the hospital's voice assistant. How can I help you?");
-            } else {
-                speak("I didn't quite catch that. Could you say it again?");
-            }
-        }, 1000);
+
+        try {
+            // Optimistic update
+            const newHistory = [...history, { role: 'user' as const, parts: text }];
+            setHistory(newHistory);
+
+            const res = await fetch('/api/agent', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message: text,
+                    contextHistory: newHistory
+                })
+            });
+
+            const data = await res.json();
+
+            if (data.error) throw new Error(data.error);
+
+            const aiResponse = data.response;
+
+            // Update history with AI response
+            setHistory(prev => [...prev, { role: 'model', parts: aiResponse }]);
+
+            speak(aiResponse);
+
+        } catch (error) {
+            console.error(error);
+            speak("I'm sorry, I'm having trouble connecting to the system. Could you repeat that?");
+        }
     };
 
     const startListening = () => {

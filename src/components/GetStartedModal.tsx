@@ -25,15 +25,18 @@ export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen:
                 body: JSON.stringify({ ...formData, plan })
             });
 
+            const data = await res.json();
+
             if (res.ok) {
                 setSuccess(true);
                 setTimeout(() => {
                     onClose();
                     setSuccess(false);
                     setFormData({ name: '', email: '', company: '' });
-                }, 2000);
+                    window.location.href = '/dashboard';
+                }, 1500);
             } else {
-                alert("Something went wrong. Please try again.");
+                alert(data.error || "Something went wrong. Please try again.");
             }
         } catch (error) {
             console.error(error);

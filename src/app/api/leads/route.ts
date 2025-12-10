@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export async function POST(request: Request) {
     try {
@@ -25,8 +23,16 @@ export async function POST(request: Request) {
         });
 
         return NextResponse.json({ success: true, lead });
-    } catch (error) {
+    } catch (error: any) {
         console.error('Request error:', error);
+
+        if (error.code === 'P2002') {
+            return NextResponse.json(
+                { error: 'This email is already registered.' },
+                { status: 409 }
+            );
+        }
+
         return NextResponse.json(
             { error: 'Error creating lead' },
             { status: 500 }
