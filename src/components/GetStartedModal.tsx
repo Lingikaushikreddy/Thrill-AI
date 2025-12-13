@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Loader2, CheckCircle2 } from 'lucide-react';
-import { announceToScreenReader } from '@/utils/accessibility';
+import { announceToScreenReader, preventBodyScroll } from '@/utils/accessibility';
 
 export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen: boolean; onClose: () => void; plan?: string }) {
     const [loading, setLoading] = useState(false);
@@ -48,9 +48,14 @@ export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen:
 
     const modalRef = useRef<HTMLDivElement>(null);
 
-    // Focus Trap & Escape Key Handler
+    // Focus Trap & Escape Key Handler & Body Scroll Lock
     useEffect(() => {
-        if (!isOpen) return;
+        if (isOpen) {
+            preventBodyScroll(true);
+        } else {
+            preventBodyScroll(false);
+            return; // If modal is not open, no need for other listeners
+        }
 
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
@@ -95,6 +100,7 @@ export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen:
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
             clearTimeout(timer);
+            preventBodyScroll(false); // Ensure body scroll is re-enabled on unmount or close
         };
     }, [isOpen, onClose]);
 
@@ -115,6 +121,7 @@ export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen:
                         role="dialog"
                         aria-modal="true"
                         aria-labelledby="modal-title"
+                        aria-describedby="modal-description"
                         initial={{ scale: 0.95, opacity: 0, y: 20 }}
                         animate={{ scale: 1, opacity: 1, y: 0 }}
                         exit={{ scale: 0.95, opacity: 0, y: 20 }}
@@ -125,9 +132,16 @@ export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen:
 
                         <div className="p-8 relative z-10">
                             <div className="flex items-center justify-between mb-8">
-                                <h3 id="modal-title" className="text-2xl font-serif font-medium text-white tracking-tight">
-                                    {success ? 'All set!' : 'Start your journey'}
-                                </h3>
+                                <div>
+                                    <h2 id="modal-title" className="text-2xl font-serif font-medium text-white tracking-tight">
+                                        {success ? 'All set!' : 'Start your journey'}
+                                    </h2>
+                                    {!success && (
+                                        <p id="modal-description" className="text-white/50 font-light text-sm mt-1">
+                                            Join the voice revolution. Start your free trial today.
+                                        </p>
+                                    )}
+                                </div>
                                 <button onClick={onClose} aria-label="Close modal" className="p-2 hover:bg-white/10 rounded-full transition-colors text-white/50 hover:text-white">
                                     <X className="w-5 h-5" />
                                 </button>

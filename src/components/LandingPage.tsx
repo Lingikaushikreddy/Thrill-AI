@@ -342,12 +342,16 @@ export function LandingPage() {
                             <button
                                 onClick={() => setBilling('monthly')}
                                 className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${billing === 'monthly' ? 'bg-brand-sky text-black shadow-[0_0_15px_rgba(56,189,248,0.3)]' : 'text-white/50 hover:text-white'}`}
+                                aria-label="Switch to Monthly billing"
+                                aria-pressed={billing === 'monthly'}
                             >
                                 Monthly
                             </button>
                             <button
                                 onClick={() => setBilling('yearly')}
                                 className={`px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${billing === 'yearly' ? 'bg-brand-sky text-black shadow-[0_0_15px_rgba(56,189,248,0.3)]' : 'text-white/50 hover:text-white'}`}
+                                aria-label="Switch to Yearly billing"
+                                aria-pressed={billing === 'yearly'}
                             >
                                 Yearly <span className="text-[10px] bg-white text-black px-1.5 py-0.5 rounded-full font-bold">-20%</span>
                             </button>

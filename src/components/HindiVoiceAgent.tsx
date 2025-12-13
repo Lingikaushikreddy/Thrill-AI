@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mic, PhoneOff, Activity, HeartPulse, AlertCircle } from 'lucide-react';
+import { announceToScreenReader } from '@/utils/accessibility';
 
 type AgentState = 'idle' | 'listening' | 'processing' | 'speaking' | 'error';
 
@@ -130,7 +131,7 @@ export function HindiVoiceAgent() {
 
     const startListening = () => {
         if (status === 'error') {
-            alert(errorMessage);
+            announceToScreenReader(errorMessage, 'assertive');
             return;
         }
         unlockAudio();
@@ -160,7 +161,7 @@ export function HindiVoiceAgent() {
                 <div className={`relative z-10 p-6 flex items-center justify-between transition-colors duration-500 ${status === 'error' ? 'bg-red-500/90' : 'bg-gradient-to-r from-orange-500 to-red-600'} text-white shadow-lg`}>
                     <div className="flex items-center gap-4">
                         <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-md border border-white/30 shadow-inner">
-                            <HeartPulse className="w-6 h-6 text-white drop-shadow-md" />
+                            <HeartPulse className="w-6 h-6 text-white drop-shadow-md" aria-hidden="true" />
                         </div>
                         <div>
                             <h3 className="font-bold text-xl tracking-wide">City General (Hindi)</h3>
@@ -241,13 +242,14 @@ export function HindiVoiceAgent() {
                     <div className="flex justify-center mb-6">
                         <button
                             onClick={startListening}
-                            className={`relative w-24 h-24 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 transform hover:scale-110 active:scale-95 group/btn ${status === 'listening' ? 'bg-gradient-to-br from-red-500 to-pink-600 text-white shadow-red-500/50' : 'bg-gradient-to-br from-orange-500 to-yellow-600 text-white shadow-orange-500/50'}`}
+                            aria-label={status === 'listening' ? "Listening..." : "Tap to Speak Hindi"}
+                            className={`relative w-24 h-24 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 transform hover:scale-110 active:scale-95 group/btn focus-visible:ring-4 focus-visible:ring-white/50 focus-visible:outline-none ${status === 'listening' ? 'bg-gradient-to-br from-red-500 to-pink-600 text-white shadow-red-500/50' : 'bg-gradient-to-br from-orange-500 to-yellow-600 text-white shadow-orange-500/50'}`}
                         >
                             <div className="absolute inset-0 bg-white/20 rounded-full blur-md opacity-0 group-hover/btn:opacity-100 transition-opacity" />
                             {status === 'listening' ? (
-                                <Activity className="w-10 h-10 animate-bounce" />
+                                <Activity className="w-10 h-10 animate-bounce" aria-hidden="true" />
                             ) : (
-                                <Mic className="w-10 h-10 drop-shadow-md" />
+                                <Mic className="w-10 h-10 drop-shadow-md" aria-hidden="true" />
                             )}
                         </button>
                     </div>
