@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Loader2, CheckCircle2 } from 'lucide-react';
 import { AnimatedLogo } from './AnimatedLogo'; // Assuming we can reuse this or simple icon
@@ -46,6 +46,58 @@ export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen:
         }
     };
 
+    const modalRef = useRef<HTMLDivElement>(null);
+
+    // Focus Trap & Escape Key Handler
+    useEffect(() => {
+        if (!isOpen) return;
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                onClose();
+                return;
+            }
+
+            if (e.key === 'Tab') {
+                if (!modalRef.current) return;
+
+                const focusableElements = modalRef.current.querySelectorAll(
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                );
+
+                if (focusableElements.length === 0) return;
+
+                const firstElement = focusableElements[0] as HTMLElement;
+                const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+
+                if (e.shiftKey) {
+                    if (document.activeElement === firstElement) {
+                        e.preventDefault();
+                        lastElement.focus();
+                    }
+                } else {
+                    if (document.activeElement === lastElement) {
+                        e.preventDefault();
+                        firstElement.focus();
+                    }
+                }
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+
+        // Focus first input on open
+        const timer = setTimeout(() => {
+            const firstInput = modalRef.current?.querySelector('input');
+            firstInput?.focus();
+        }, 100);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+            clearTimeout(timer);
+        };
+    }, [isOpen, onClose]);
+
     return (
         <AnimatePresence>
             {isOpen && (
@@ -59,6 +111,10 @@ export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen:
                     />
 
                     <motion.div
+                        ref={modalRef}
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="modal-title"
                         initial={{ scale: 0.95, opacity: 0, y: 20 }}
                         animate={{ scale: 1, opacity: 1, y: 0 }}
                         exit={{ scale: 0.95, opacity: 0, y: 20 }}
@@ -69,10 +125,10 @@ export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen:
 
                         <div className="p-8 relative z-10">
                             <div className="flex items-center justify-between mb-8">
-                                <h3 className="text-2xl font-serif font-medium text-white tracking-tight">
+                                <h3 id="modal-title" className="text-2xl font-serif font-medium text-white tracking-tight">
                                     {success ? 'All set!' : 'Start your journey'}
                                 </h3>
-                                <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition-colors text-white/50 hover:text-white">
+                                <button onClick={onClose} aria-label="Close modal" className="p-2 hover:bg-white/10 rounded-full transition-colors text-white/50 hover:text-white">
                                     <X className="w-5 h-5" />
                                 </button>
                             </div>
@@ -87,8 +143,9 @@ export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen:
                             ) : (
                                 <form onSubmit={handleSubmit} className="space-y-5">
                                     <div>
-                                        <label className="block text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Full Name</label>
+                                        <label htmlFor="name" className="block text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Full Name</label>
                                         <input
+                                            id="name"
                                             required
                                             type="text"
                                             placeholder="Jane Doe"
@@ -99,8 +156,9 @@ export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen:
                                     </div>
 
                                     <div>
-                                        <label className="block text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Work Email</label>
+                                        <label htmlFor="email" className="block text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Work Email</label>
                                         <input
+                                            id="email"
                                             required
                                             type="email"
                                             placeholder="jane@company.com"
@@ -111,8 +169,9 @@ export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen:
                                     </div>
 
                                     <div>
-                                        <label className="block text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Company Name</label>
+                                        <label htmlFor="company" className="block text-xs font-mono uppercase tracking-wider text-white/40 mb-2">Company Name</label>
                                         <input
+                                            id="company"
                                             type="text"
                                             placeholder="Acme Inc."
                                             value={formData.company}
@@ -124,7 +183,7 @@ export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen:
                                     <button
                                         disabled={loading}
                                         type="submit"
-                                        className="w-full py-4 bg-white text-black rounded-xl font-bold hover:bg-brand-sky transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-6"
+                                        className="w-full py-4 bg-white text-black rounded-xl font-bold hover:bg-brand-sky transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-6 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-sky"
                                     >
                                         {loading ? (
                                             <>

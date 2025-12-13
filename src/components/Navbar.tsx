@@ -18,7 +18,7 @@ export function Navbar() {
                 className="fixed top-0 w-full z-50 bg-[#FFFDF7]/60 backdrop-blur-xl border-b border-[#F5E6D3]/50"
             >
                 <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-                    <Link href="/" className="flex items-center gap-3 group">
+                    <Link href="/" className="flex items-center gap-3 group" aria-label="Thrill AI Home">
                         <motion.div
                             whileHover={{ rotate: 10 }}
                             transition={{ duration: 0.3 }}
@@ -34,14 +34,16 @@ export function Navbar() {
                         <span className="font-bold text-xl tracking-tight text-[#2D2520]">Thrill AI</span>
                     </Link>
 
-                    <div className="hidden md:flex items-center gap-8">
+                    <ul className="hidden md:flex items-center gap-8">
                         {['Product', 'Features', 'Pricing', 'Blog', 'Company'].map((item) => (
-                            <Link key={item} href={`#${item.toLowerCase()}`} className="relative text-[#5C5C5C] hover:text-[#FF6B6B] transition-colors font-medium group">
-                                {item}
-                                <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-[#FF6B6B] origin-left scale-x-0 group-hover:scale-x-100 transition-transform" />
-                            </Link>
+                            <li key={item}>
+                                <Link href={`#${item.toLowerCase()}`} className="relative text-[#5C5C5C] hover:text-[#FF6B6B] transition-colors font-medium group">
+                                    {item}
+                                    <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-[#FF6B6B] origin-left scale-x-0 group-hover:scale-x-100 transition-transform" />
+                                </Link>
+                            </li>
                         ))}
-                    </div>
+                    </ul>
 
                     <motion.button
                         onClick={() => setIsModalOpen(true)}

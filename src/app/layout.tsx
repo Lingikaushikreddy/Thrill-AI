@@ -30,7 +30,12 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${newsreader.variable} antialiased bg-[#030303] text-white selection:bg-[#38BDF8] selection:text-black`}
       >
-        {children}
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-4 focus:left-4 focus:px-6 focus:py-3 focus:bg-white focus:text-black focus:rounded-lg focus:font-bold">
+          Skip to main content
+        </a>
+        <main id="main-content">
+          {children}
+        </main>
       </body>
     </html>
   );

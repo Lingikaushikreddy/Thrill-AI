@@ -43,11 +43,11 @@ export function LandingPage() {
                     <span className="font-sans font-medium text-base tracking-tight text-white">Thrill AI</span>
                 </div>
 
-                <div className="hidden md:flex items-center gap-6 mr-8">
-                    <Link href="#features" className="text-xs font-medium text-white/50 hover:text-white transition-colors">Features</Link>
-                    <Link href="#solutions" className="text-xs font-medium text-white/50 hover:text-white transition-colors">Solutions</Link>
-                    <Link href="#pricing" className="text-xs font-medium text-white/50 hover:text-white transition-colors">Pricing</Link>
-                </div>
+                <ul className="hidden md:flex items-center gap-6 mr-8">
+                    <li><Link href="#features" className="text-xs font-medium text-white/50 hover:text-white transition-colors">Features</Link></li>
+                    <li><Link href="#solutions" className="text-xs font-medium text-white/50 hover:text-white transition-colors">Solutions</Link></li>
+                    <li><Link href="#pricing" className="text-xs font-medium text-white/50 hover:text-white transition-colors">Pricing</Link></li>
+                </ul>
 
                 <button
                     onClick={() => {
@@ -64,13 +64,13 @@ export function LandingPage() {
             <main className="container lg:px-12 lg:pt-0 min-h-[1100px] flex flex-col lg:flex-row z-10 mx-auto pt-0 pr-6 pl-6 relative items-center">
                 {/* Left Column: Copy */}
                 <div className="w-full lg:w-1/2 flex flex-col justify-center pt-32 pb-20 lg:py-0 mt-20 lg:mt-0">
-                    <h4 className="text-xs font-mono tracking-[0.2em] text-white/40 uppercase mb-8 flex items-center gap-2 animate-[var(--animate-enter)]">
+                    <div className="text-xs font-mono tracking-[0.2em] text-white/40 uppercase mb-8 flex items-center gap-2 animate-[var(--animate-enter)]">
                         <span className="relative flex h-2 w-2">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-sky opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-sky"></span>
                         </span>
                         Voice System Operational
-                    </h4>
+                    </div>
 
                     <h1 className="lg:text-7xl leading-[1.1] text-brand-sky text-glow text-5xl italic tracking-tight font-serif mb-6 animate-[var(--animate-enter-delay-1)]">
                         Architect your CX <br />
