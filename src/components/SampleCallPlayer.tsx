@@ -145,8 +145,8 @@ export function SampleCallPlayer({ language, duration, transcript }: SampleCallP
     return (
         <div className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 backdrop-blur-sm hover:border-brand-sky/30 transition-colors group relative overflow-hidden">
             {missingVoice && (
-                <div className="absolute top-0 left-0 w-full bg-orange-500/20 text-orange-200 text-xs px-4 py-1 flex items-center gap-2 border-b border-orange-500/30">
-                    <AlertTriangle className="w-3 h-3" />
+                <div className="absolute top-0 left-0 w-full bg-orange-500/20 text-orange-200 text-xs px-4 py-1 flex items-center gap-2 border-b border-orange-500/30" role="alert">
+                    <AlertTriangle className="w-3 h-3" aria-hidden="true" />
                     <span>System voice for {language} not found. Playback may be silent.</span>
                 </div>
             )}
@@ -155,15 +155,16 @@ export function SampleCallPlayer({ language, duration, transcript }: SampleCallP
                 <button
                     onClick={togglePlay}
                     className="w-12 h-12 rounded-full bg-brand-sky/10 text-brand-sky flex items-center justify-center hover:bg-brand-sky hover:text-black transition-all shadow-[0_0_15px_rgba(56,189,248,0.1)] hover:shadow-[0_0_20px_rgba(56,189,248,0.4)] flex-shrink-0"
+                    aria-label={isPlaying ? `Pause ${language} sample` : `Play ${language} sample`}
                 >
-                    {isPlaying ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 fill-current ml-1" />}
+                    {isPlaying ? <Pause className="w-5 h-5 fill-current" aria-hidden="true" /> : <Play className="w-5 h-5 fill-current ml-1" aria-hidden="true" />}
                 </button>
 
                 <div className="flex-1 space-y-1">
                     <div className="flex justify-between text-xs font-mono uppercase tracking-wider text-white/40">
                         <span>{language} Sample</span>
                         <div className="flex items-center gap-1">
-                            <Volume2 className="w-3 h-3" />
+                            <Volume2 className="w-3 h-3" aria-hidden="true" />
                             <span>{duration}</span>
                         </div>
                     </div>

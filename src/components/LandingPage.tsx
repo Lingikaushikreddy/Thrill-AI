@@ -55,9 +55,10 @@ export function LandingPage() {
                         setIsModalOpen(true);
                     }}
                     className="flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black text-xs font-semibold hover:bg-brand-sky transition-colors group"
+                    aria-label="Start Free Trial"
                 >
                     Start Free Trial
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
                 </button>
             </nav>
 
@@ -82,13 +83,13 @@ export function LandingPage() {
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-6 gap-x-6 gap-y-6 items-start sm:items-center animate-[var(--animate-enter-delay-3)]">
-                        <button className="shiny-cta focus:outline-none">
+                        <button className="shiny-cta focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-sky focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-full" aria-label="Initialize Agent System">
                             <span>Initialize Agent</span>
                         </button>
 
-                        <Link href="/demos/languages" className="hover:bg-white/10 hover:text-white transition-all flex text-sm font-medium text-slate-300 bg-white/5 rounded-full pt-3 pr-6 pb-3 pl-6 gap-x-2 gap-y-2 items-center group relative border border-white/5 overflow-hidden">
+                        <Link href="/demos/languages" className="hover:bg-white/10 hover:text-white transition-all flex text-sm font-medium text-slate-300 bg-white/5 rounded-full pt-3 pr-6 pb-3 pl-6 gap-x-2 gap-y-2 items-center group relative border border-white/5 overflow-hidden" aria-label="View Demos">
                             <span className="text-sm font-medium tracking-tight">View Demo</span>
-                            <ArrowRight className="w-4 h-4 opacity-70 group-hover:translate-x-0.5 transition-transform" />
+                            <ArrowRight className="w-4 h-4 opacity-70 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
                         </Link>
                     </div>
                 </div>
@@ -202,7 +203,7 @@ export function LandingPage() {
                                 </div>
                                 <div className="self-start max-w-[90%] bg-white/[0.03] backdrop-blur-md rounded-2xl rounded-tl-sm p-5 border border-white/10 relative overflow-hidden group-hover:border-brand-sky/20 transition-colors duration-500">
                                     <div className="flex items-center gap-2 mb-3 text-brand-sky font-mono text-[10px] uppercase tracking-wider">
-                                        <Zap className="w-3 h-3" /> Thrill Agent
+                                        <Zap className="w-3 h-3" aria-hidden="true" /> Thrill Agent
                                     </div>
                                     <p className="mb-4 text-xs text-white/80 font-light">Checking availability... I have a slot at 2 PM. Shall I confirm?</p>
                                 </div>
@@ -222,7 +223,7 @@ export function LandingPage() {
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="relative">
                                     <div className="absolute inset-0 bg-brand-sky/20 blur-md rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                                    <Globe className="w-6 h-6 text-brand-sky relative z-10" />
+                                    <Globe className="w-6 h-6 text-brand-sky relative z-10" aria-hidden="true" />
                                 </div>
                                 <h3 className="text-2xl font-semibold tracking-tight text-white group-hover:text-white transition-colors">Multilingual Native</h3>
                             </div>
@@ -237,7 +238,7 @@ export function LandingPage() {
                                 <div className="absolute w-36 h-36 border border-brand-sky/20 rounded-full animate-[spin_15s_linear_infinite] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
 
                                 <div className="z-10 flex group-hover:border-brand-sky/40 transition-colors duration-500 bg-[#0F110E] w-24 h-24 border-white/10 border rounded-3xl relative items-center justify-center overflow-hidden shadow-2xl">
-                                    <Layers className="w-8 h-8 text-white relative z-20 group-hover:text-brand-sky transition-colors duration-500" />
+                                    <Layers className="w-8 h-8 text-white relative z-20 group-hover:text-brand-sky transition-colors duration-500" aria-hidden="true" />
                                 </div>
                             </div>
                         </div>
@@ -259,7 +260,7 @@ export function LandingPage() {
                                     <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-none"></span>
                                     <span className="text-xs text-white/50 font-mono uppercase tracking-wider">Secure_Vault</span>
                                 </div>
-                                <ShieldCheck className="w-4 h-4 text-emerald-500" />
+                                <ShieldCheck className="w-4 h-4 text-emerald-500" aria-hidden="true" />
                             </div>
                             <div className="relative py-1">
                                 <div className="flex justify-between text-[10px] text-white/40 mb-2 font-mono uppercase">
@@ -275,9 +276,9 @@ export function LandingPage() {
                 </div>
 
                 <div className="mt-24 relative z-10">
-                    <button className="group relative px-9 py-4 rounded-full bg-white text-black font-semibold text-sm transition-all duration-300 hover:bg-[#e5e5e5] flex items-center gap-3 overflow-hidden tracking-tight">
+                    <button className="group relative px-9 py-4 rounded-full bg-white text-black font-semibold text-sm transition-all duration-300 hover:bg-[#e5e5e5] flex items-center gap-3 overflow-hidden tracking-tight" aria-label="Explore Capabilities">
                         <span className="relative z-10">Explore Capabilities</span>
-                        <ArrowRight className="w-4 h-4 relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
+                        <ArrowRight className="w-4 h-4 relative z-10 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
                         <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent z-0"></div>
                     </button>
                 </div>
@@ -318,7 +319,7 @@ export function LandingPage() {
                                     </div>
                                     <div className="text-white flex items-center justify-center gap-2 font-medium relative">
                                         <div className="absolute inset-0 bg-brand-sky/5 blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                        <CheckCircle2 className="w-5 h-5 text-brand-sky fill-brand-sky/10 relative z-10" />
+                                        <CheckCircle2 className="w-5 h-5 text-brand-sky fill-brand-sky/10 relative z-10" aria-hidden="true" />
                                         <span className="relative z-10">{item.thrill}</span>
                                     </div>
                                 </div>
@@ -380,7 +381,7 @@ export function LandingPage() {
                                     <ul className="space-y-4 mb-8 flex-1">
                                         {plan.features.map((feature, idx) => (
                                             <li key={idx} className="flex items-start gap-3 text-sm text-white/70 font-light">
-                                                <CheckCircle2 className={`w-4 h-4 shrink-0 mt-0.5 ${plan.highlight ? 'text-brand-sky' : 'text-white/40'}`} />
+                                                <CheckCircle2 className={`w-4 h-4 shrink-0 mt-0.5 ${plan.highlight ? 'text-brand-sky' : 'text-white/40'}`} aria-hidden="true" />
                                                 {feature}
                                             </li>
                                         ))}
@@ -396,6 +397,7 @@ export function LandingPage() {
                                             }
                                         }}
                                         className={`w-full py-3 rounded-full text-sm font-medium transition-all ${plan.highlight ? 'bg-brand-sky text-black hover:bg-sky-300 shadow-[0_0_20px_rgba(56,189,248,0.2)]' : 'bg-white/10 text-white hover:bg-white/20'}`}
+                                        aria-label={billing === 'monthly' ? `Start Free Trial for ${plan.name} plan` : `Contact Sales for ${plan.name} plan`}
                                     >
                                         {billing === 'monthly' ? 'Start Free Trial' : 'Contact Sales'}
                                     </button>

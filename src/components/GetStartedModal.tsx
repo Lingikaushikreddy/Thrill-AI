@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Loader2, CheckCircle2 } from 'lucide-react';
+import { announceToScreenReader } from '@/utils/accessibility';
 
 export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen: boolean; onClose: () => void; plan?: string }) {
     const [loading, setLoading] = useState(false);
@@ -35,11 +36,11 @@ export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen:
                     window.location.href = '/dashboard';
                 }, 1500);
             } else {
-                alert(data.error || "Something went wrong. Please try again.");
+                announceToScreenReader(data.error || "Something went wrong. Please try again.", "assertive");
             }
         } catch (error) {
             console.error(error);
-            alert("Error submitting form.");
+            announceToScreenReader("Error submitting form. Please check your connection and try again.", "assertive");
         } finally {
             setLoading(false);
         }
@@ -135,7 +136,7 @@ export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen:
                             {success ? (
                                 <div className="flex flex-col items-center justify-center py-12 text-center">
                                     <div className="w-16 h-16 bg-brand-sky/10 rounded-full flex items-center justify-center mb-6 border border-brand-sky/20">
-                                        <CheckCircle2 className="w-8 h-8 text-brand-sky" />
+                                        <CheckCircle2 className="w-8 h-8 text-brand-sky" aria-hidden="true" />
                                     </div>
                                     <p className="text-white/70 font-light text-lg">Thanks for signing up! We'll be in touch shortly.</p>
                                 </div>
@@ -151,6 +152,7 @@ export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen:
                                             value={formData.name}
                                             onChange={e => setFormData({ ...formData, name: e.target.value })}
                                             className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white placeholder:text-white/20 focus:outline-none focus:border-brand-sky/50 focus:ring-1 focus:ring-brand-sky/50 transition-all font-light"
+                                            aria-required="true"
                                         />
                                     </div>
 
@@ -164,6 +166,7 @@ export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen:
                                             value={formData.email}
                                             onChange={e => setFormData({ ...formData, email: e.target.value })}
                                             className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white placeholder:text-white/20 focus:outline-none focus:border-brand-sky/50 focus:ring-1 focus:ring-brand-sky/50 transition-all font-light"
+                                            aria-required="true"
                                         />
                                     </div>
 
@@ -183,10 +186,11 @@ export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen:
                                         disabled={loading}
                                         type="submit"
                                         className="w-full py-4 bg-white text-black rounded-xl font-bold hover:bg-brand-sky transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-6 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-sky"
+                                        aria-busy={loading}
                                     >
                                         {loading ? (
                                             <>
-                                                <Loader2 className="w-5 h-5 animate-spin" />
+                                                <Loader2 className="w-5 h-5 animate-spin" aria-hidden="true" />
                                                 Processing...
                                             </>
                                         ) : (
