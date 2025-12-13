@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowRight, ArrowUpRight, CheckCircle2, History, Layers, Zap, CreditCard, Gem, Globe, ShieldCheck } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Layers, Zap, Globe, ShieldCheck } from 'lucide-react';
 import { AnimatedLogo } from './AnimatedLogo';
 import { GetStartedModal } from './GetStartedModal';
 import pricingData from '@/data/pricing.json';

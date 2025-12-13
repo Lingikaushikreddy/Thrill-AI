@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Loader2, CheckCircle2 } from 'lucide-react';
-import { AnimatedLogo } from './AnimatedLogo'; // Assuming we can reuse this or simple icon
 
 export function GetStartedModal({ isOpen, onClose, plan = 'starter' }: { isOpen: boolean; onClose: () => void; plan?: string }) {
     const [loading, setLoading] = useState(false);
